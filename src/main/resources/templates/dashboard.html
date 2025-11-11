@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Static Code Analysis Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 0.5rem;
+        }
+        .info-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .info-value {
+            color: #333;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Dashboard</h1>
+        <div class="info-card">
+            <span class="info-label">Username:</span>
+            <span class="info-value" th:text="${username}">N/A</span>
+        </div>
+        <div class="info-card">
+            <span class="info-label">Email:</span>
+            <span class="info-value" th:text="${email}">N/A</span>
+        </div>
+        <div class="info-card">
+            <p>This is a demonstration application for static code analysis tools.</p>
+            <p>The application intentionally contains code quality issues that various tools can detect.</p>
+        </div>
+    </div>
+</body>
+</html>
+
