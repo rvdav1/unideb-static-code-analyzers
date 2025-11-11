@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">  
+  <!-- Example suppression: CVE-2024-47554 in commons-io 2.11.0 (CVSS 4.3 - Medium severity)
+       This vulnerability is a DoS via uncontrolled resource consumption. 
+       Suppressed for demonstration purposes - in real scenarios, add justification. -->
+  <suppress>
+    <notes><![CDATA[
+      CVE-2024-47554: DoS vulnerability in commons-io 2.11.0 via uncontrolled resource consumption.
+      Suppressed as an example of the least severe vulnerability in the project (CVSS 4.3).
+      In production, this should include risk assessment and remediation plan.
+    ]]></notes>
+    <packageUrl regex="true">^pkg:maven/commons\-io/commons\-io@.*$</packageUrl>
+    <cve>CVE-2024-47554</cve>
+  </suppress>
+</suppressions>
+
