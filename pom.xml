@@ -26,6 +26,15 @@
         <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
 
         <checkstyle.version>3.6.0</checkstyle.version>
+
+        <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
+
+        <sonar.organization>${env.SONAR_ORGANIZATION}</sonar.organization>
+        <sonar.host.url>${env.SONAR_HOST_URL}</sonar.host.url>
+        <sonar.token>${env.SONAR_TOKEN}</sonar.token>
+
+        <!-- SonarQube Exclusions -->
+        <sonar.exclusions>**/domain/**,**/config/**,**/StaticCodeAnalysisDemoApplication.java</sonar.exclusions>
 	</properties>
 
 
@@ -224,6 +233,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin.version}</version>
             </plugin>
 		</plugins>
 	</build>
