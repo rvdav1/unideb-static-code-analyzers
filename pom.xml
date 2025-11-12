@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0-M3</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.epam.example</groupId>
-	<artifactId>static-code-analyzis-demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
-	<name>Static Code Analyzis Demonstration</name>
-	<description>Demo project for static code analyzis demonstration</description>
-	<properties>
-		<java.version>21</java.version>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.0-M3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.epam.example</groupId>
+    <artifactId>static-code-analyzis-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Static Code Analyzis Demonstration</name>
+    <description>Demo project for static code analyzis demonstration</description>
+    <properties>
+        <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <springdoc.openapi.version>3.0.0-M1</springdoc.openapi.version>
@@ -35,32 +35,34 @@
 
         <!-- SonarQube Exclusions -->
         <sonar.exclusions>**/domain/**,**/config/**,**/StaticCodeAnalysisDemoApplication.java</sonar.exclusions>
-	</properties>
+
+        <owasp-dependency-check.version>12.1.8</owasp-dependency-check.version>
+    </properties>
 
 
-	<dependencies>
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+    <dependencies>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -79,64 +81,64 @@
             <version>${jacoco.version}</version>
         </dependency>
 
-		<!-- DB -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+        <!-- DB -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
-		<!-- Lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
-		<!-- VULNERABLE COMMONS-TEXT - FOR DEMONSTRATION PURPOSES ONLY -->
-		<!-- CVE-2022-42889 - Text4Shell - CVSS 9.8 Critical -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-text</artifactId>
-			<version>1.10.0</version> <!-- Vulnerable in 1.9, fixed in 1.10.0 -->
-		</dependency>
+        <!-- VULNERABLE COMMONS-TEXT - FOR DEMONSTRATION PURPOSES ONLY -->
+        <!-- CVE-2022-42889 - Text4Shell - CVSS 9.8 Critical -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.10.0</version> <!-- Vulnerable in 1.9, fixed in 1.10.0 -->
+        </dependency>
 
-		<!-- Nashorn JavaScript Engine - Required for Text4Shell exploitation -->
-		<!-- Enables ${script:js:...} evaluation in commons-text 1.9 -->
-		<dependency>
-			<groupId>org.openjdk.nashorn</groupId>
-			<artifactId>nashorn-core</artifactId>
-			<version>15.4</version>
-		</dependency>
+        <!-- Nashorn JavaScript Engine - Required for Text4Shell exploitation -->
+        <!-- Enables ${script:js:...} evaluation in commons-text 1.9 -->
+        <dependency>
+            <groupId>org.openjdk.nashorn</groupId>
+            <artifactId>nashorn-core</artifactId>
+            <version>15.4</version>
+        </dependency>
 
         <!-- Testing -->
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${testng.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito.version}</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -204,15 +206,15 @@
                     </execution>
                 </executions>
             </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.plugin.version}</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -239,8 +241,48 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar-maven-plugin.version}</version>
             </plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${owasp-dependency-check.version}</version>
+                <executions>
+                    <execution>
+                        <id>dependency-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Skip by default if skip.owasp property is set -->
+                    <skip>${skip.owasp}</skip>
+                    <failBuildOnCVSS>8</failBuildOnCVSS>
+                    <formats>
+                        <format>HTML</format>
+                        <format>JSON</format>
+                    </formats>
+                    <!-- Use NVD API key if available (prevents rate limiting and may use different data format) -->
+                    <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                    <!-- Skip update if database is recent (reduces API calls) -->
+                    <autoUpdate>true</autoUpdate>
+                    <!-- NVD API rate limiting and retry configuration -->
+                    <nvdValidForHours>24</nvdValidForHours>
+                    <nvdMaxRetryCount>5</nvdMaxRetryCount>
+                    <!-- Disable analyzers not needed for Java projects -->
+                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                    <!-- OSS Index analyzer configuration (optional - provides additional vulnerability data) -->
+                    <!-- Get free credentials at: https://ossindex.sonatype.org/ -->
+                    <ossIndexUsername>${env.OSSINDEX_USERNAME}</ossIndexUsername>
+                    <ossIndexPassword>${env.OSSINDEX_TOKEN}</ossIndexPassword>
+                    <suppressionFiles>
+                        <suppressionFile>${project.basedir}/src/main/resources/owasp-suppressions.xml</suppressionFile>
+                    </suppressionFiles>
+                    <!-- Don't fail build on update errors (known CVSS v4 parsing bug) -->
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <!-- Profile to use strict checkstyle that fails the build -->
