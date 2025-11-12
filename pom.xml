@@ -24,6 +24,8 @@
         <mockito.version>5.20.0</mockito.version>
         <maven.surefire.plugin.version>3.5.4</maven.surefire.plugin.version>
         <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
+
+        <checkstyle.version>3.6.0</checkstyle.version>
 	</properties>
 
 
@@ -202,7 +204,51 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.version}</version>
+                <!-- Default configuration (used when no profile is active) -->
+                <configuration>
+                    <configLocation>src/main/resources/checkstyle.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>false</failsOnError>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>checkstyle</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
+
+    <profiles>
+        <!-- Profile to use strict checkstyle that fails the build -->
+        <profile>
+            <id>strict</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <configuration>
+                            <configLocation>src/main/resources/checkstyle-strict.xml</configLocation>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <violationSeverity>error</violationSeverity>
+                            <linkXRef>false</linkXRef>
+                            <outputFile>target/checkstyle-strict-result.xml</outputFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
