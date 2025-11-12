@@ -82,3 +82,63 @@ jobs:
 
       - name: Check coverage threshold
         run: mvn jacoco:check
+
+  sonarqube:
+    name: SonarQube Analysis
+    runs-on: ubuntu-latest
+    # Enable this job by setting GitHub secrets: SONAR_TOKEN, SONAR_HOST_URL, SONAR_ORGANIZATION, SONAR_PROJECT_KEY
+    # See SONARQUBE_SETUP.md for detailed instructions
+    # Note: Job will run but fail gracefully if secrets are not set
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build and analyze with SonarQube
+        id: sonar-analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+        run: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "SonarQube analysis skipped - SONAR_TOKEN secret not configured"
+            echo "See SONARQUBE_SETUP.md for setup instructions"
+            exit 0
+          fi
+          if [ -z "$SONAR_ORGANIZATION" ]; then
+            echo "Error: SONAR_ORGANIZATION secret is required for SonarQube analysis"
+            exit 1
+          fi
+          mvn clean verify sonar:sonar -Dskip.owasp=true -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.pullrequest.github.repository=${{ github.repository }}
+
+      - name: SonarQube Quality Gate Check
+        if: steps.sonar-analysis.outcome == 'success'
+        uses: sonarsource/sonarqube-quality-gate-action@master
+        with:
+          scanMetadataReportFile: target/sonar/report-task.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+        continue-on-error: false
